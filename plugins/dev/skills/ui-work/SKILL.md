@@ -1,6 +1,6 @@
 ---
 name: ui-work
-description: Use when implementing or modifying any user-facing UI — new screens, components, dialogs, layout changes, UX flows — before writing the UI code, and when a task comes with a Figma link or design screenshots ("build this screen", "add a dialog", "change the layout", "화면 만들어줘", "이 컴포넌트 추가해줘", "UI 수정해줘"). Also use when the user corrects UI output ("this should be a toast, not a modal", "the wording tone is off", "여긴 모달 말고 토스트지", "문구 톤이 아니야"), and for "/dev:ui-work settings" or "/dev:ui-work 설정".
+description: Use when implementing or modifying any user-facing UI — new screens, components, dialogs, layout changes, UX flows — invoke it first, before exploring or writing the UI code, and when a task comes with a Figma link or design screenshots ("build this screen", "add a dialog", "change the layout", "화면 만들어줘", "이 컴포넌트 추가해줘", "다이얼로그 추가해줘", "레이아웃 바꿔줘", "UI 수정해줘"). Also use when the user corrects UI output ("this should be a toast, not a modal", "the wording tone is off", "여긴 모달 말고 토스트지", "문구 톤이 아니야"), and for "/dev:ui-work settings" or "/dev:ui-work 설정".
 ---
 
 # UI work routine

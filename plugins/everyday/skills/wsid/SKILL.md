@@ -1,6 +1,6 @@
 ---
 name: wsid
-description: Use when the user pastes something (Slack message, email, meeting note, request, error, screenshot) without a clear instruction and expects the right handling — "/everyday:wsid", "What should I do", "what is this", "이거 뭐임", "이거 어떻게 하지". Also use when called with no input at all to get a briefing of what to work on next, when the user says a task is done or adds a task ("add this to my to-dos", "that's done", "이거 할 일에 넣어줘", "그거 끝났어"), and for "/everyday:wsid settings" or "/everyday:wsid 설정".
+description: Use when the user pastes something (Slack message, email, notice, meeting note, request, error, screenshot) and asks what it is or what to do with it, or gives no clear instruction — invoke it instead of answering directly, since it also records the follow-up to-dos — "/everyday:wsid", "What should I do", "what should I do with this", "what is this", "이거 뭐임", "이거 어떻게 하지". Also use when called with no input at all or asked what to work on today ("what should I work on today", "오늘 뭐하지", "뭐부터 하지") to get a briefing of what to work on next, when the user says a task is done or adds a task ("add this to my to-dos", "that's done", "이거 할 일에 넣어줘", "그거 끝났어"), and for "/everyday:wsid settings" or "/everyday:wsid 설정".
 ---
 
 # WSID — What Should I Do (inbox for anything + to-dos and work notes)
