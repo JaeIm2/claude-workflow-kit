@@ -5,6 +5,16 @@ English | [한국어](README.ko.md)
 A Claude Code skill that turns a request, notes, or a bug description into one well-structured issue: a feature or task with testable acceptance criteria, or a bug report with reproduction steps and expected results.
 When the request is vague, it asks one question at a time until the issue is clear enough to work on, instead of guessing.
 
+**When to use:** You need to file a task or bug, or turn a vague request from someone into an issue the team can actually work on.
+
+**Try saying:**
+- "Write a ticket for this"
+- "File a bug: the save button does nothing on the profile page"
+- "Turn this into a task"
+- "Just make it draft-ready, don't create it"
+
+**Needs:** nothing to get a draft. A work tracker connection lets it check for duplicates and create the issue after you approve.
+
 ## Requirements
 - Claude Code
 - (Optional) An MCP server or connector for your work tracker (Jira, Linear, GitHub Issues, Notion, Asana, YouTrack, ...). With one, it checks for duplicates and creates the issue after you approve. Without one, it gives you a copy-ready draft

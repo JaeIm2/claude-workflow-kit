@@ -5,6 +5,16 @@ English | [한국어](README.ko.md)
 A Claude Code skill: paste in a message, email, meeting note, or request, and it figures out how to handle it, while automatically recording the to-dos and progress that come out of it.
 Call it with nothing and it pulls together your notes and linked sources into a "what to do first today" briefing. Schedule it in the morning and the briefing is ready before you start work.
 
+**When to use:** Something landed on your plate and you're not sure what to do with it, you want your to-do list kept for you, or it's morning and you don't know where to start.
+
+**Try saying:**
+- "What should I do today?" (or just `/everyday:wsid`)
+- paste a message, then "what is this?"
+- "Add this to my to-dos"
+- "That's done"
+
+**Needs:** nothing to start. A work tracker or docs connector adds more to the briefing; the morning schedule needs macOS.
+
 ## Requirements
 - Claude Code
 - (Optional) An MCP server or connector for the service you track work in (Jira, Linear, Notion, Asana, GitHub Issues, YouTrack, ...). Without one, wsid works from its own to-do list and notes

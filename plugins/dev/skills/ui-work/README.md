@@ -5,6 +5,15 @@ English | [한국어](README.ko.md)
 A Claude Code skill for building or changing screens, components, dialogs, and UX flows.
 It follows your repo's UI conventions, confirms the structure with you before writing code, checks the result in a real browser before calling it done, and writes every correction you make into the conventions file so you never have to give the same correction twice.
 
+**When to use:** You're building or changing a screen, component, dialog, or UX flow, or correcting UI Claude already made.
+
+**Try saying:**
+- "Add a delete confirmation dialog to the settings page"
+- "Build this screen" + a Figma link or screenshot
+- "That should be inline, not a toast"
+
+**Needs:** a browser tool (e.g. Playwright MCP) for checking the result. Without one it still works and says what it couldn't check.
+
 ## Requirements
 - Claude Code
 - A browser automation tool for self-verification (e.g. Playwright MCP: `claude mcp add playwright -- npx @playwright/mcp@latest`). Without one, the skill still works but tells you what it couldn't check

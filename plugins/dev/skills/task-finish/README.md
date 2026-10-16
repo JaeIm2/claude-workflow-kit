@@ -5,6 +5,15 @@ English | [한국어](README.ko.md)
 A Claude Code skill for when the code is done. It rebases onto the latest base branch, runs your checks, commits, pushes (only after you approve), drafts and opens the pull request (merge request), triages automated review comments, confirms the change is actually deployed to the test environment, and only then proposes handing it to QA. Afterwards it cleans up the worktree and branch.
 It is the other end of `/dev:task-start`.
 
+**When to use:** The code is done and you want it pushed, reviewed, deployed to the test environment, and handed to QA.
+
+**Try saying:**
+- "Ready to push"
+- "Let's open the PR"
+- "Let's wrap this up"
+
+**Needs:** git. Your git host's CLI or MCP and a work tracker connection are optional.
+
 ## Requirements
 - Claude Code and git
 - (Optional) Your git host's CLI (`gh`, `glab`) or MCP server. Without one, it gives you the link and the drafted pull request text

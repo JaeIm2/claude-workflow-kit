@@ -11,6 +11,15 @@ It looks at how your product is organized today, researches how comparable produ
 
 You don't need to be a developer. A code repo helps, but a product URL, screenshots, or a written description work too.
 
+**When to use:** You need a planning document for a new feature, or for adding one to an existing product, that developers and QA can start from right away.
+
+**Try saying:**
+- "Plan this feature: bulk export for the admin console"
+- "Write a planning doc for this"
+- "Reflect this feedback in the plan"
+
+**Needs:** nothing. Web search, a browser tool, or a docs connector make it better but are optional.
+
 ## Requirements
 - Claude Code
 - (Optional) Web search, for researching comparable products

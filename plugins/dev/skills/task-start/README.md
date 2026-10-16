@@ -5,6 +5,15 @@ English | [한국어](README.ko.md)
 A Claude Code skill for the moment you pick up a new task. It reads the item from your work tracker, checks whatever it depends on, creates a new branch (in its own git worktree if you use them), makes sure that branch can't push into your base branch by accident, and opens a work note so the next session knows where you left off.
 It is the first of three dev skills: `/dev:task-start` → `/dev:task-finish`, and `/dev:qa-reject` when QA sends it back.
 
+**When to use:** You just picked up a new task or ticket and want to start on a clean branch without setting it up by hand.
+
+**Try saying:**
+- "Start PROJ-123"
+- "I got assigned this ticket"
+- `/dev:task-start PROJ-123`
+
+**Needs:** git. A work tracker connection is optional (otherwise paste the task in).
+
 ## Requirements
 - Claude Code and git
 - (Optional) An MCP server or connector for your work tracker (Jira, Linear, GitHub Issues, GitLab Issues, YouTrack, ...). Without one, paste the task description in

@@ -4,6 +4,15 @@ English | [한국어](README.ko.md)
 
 When you run several Claude Code sessions on one machine, two of them starting a full build or test suite at the same moment can run the machine out of memory. This skill makes Claude wrap heavy commands (build, test, typecheck, full lint) in a small lock script, so they wait in line instead of running together.
 
+**When to use:** You run several Claude Code sessions on one machine and builds or tests slow it down or run out of memory when they overlap.
+
+**Try saying:**
+- "Build it"
+- "Run the tests"
+- `/dev:with-lock yarn build`
+
+**Needs:** nothing but bash on macOS or Linux. No setup.
+
 ## Requirements
 - Claude Code
 - macOS or Linux (plain bash, no extra tools)

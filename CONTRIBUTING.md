@@ -46,9 +46,22 @@ plugins/<plugin>/
 
 - Search the repo for names, internal URLs, and customer names. The result must be zero.
 - `claude plugin validate ./`
+- Run `scripts/check.sh` (README pairs, SKILL.md frontmatter and Personal rules, plugin registration and versions, script syntax, README links, privacy scan). CI runs it and `claude plugin validate` on every push and pull request.
+- Keep company-specific words (names, project keys, internal hosts) in your own `scripts/private-patterns.txt`, one `grep -E` pattern per line. It is gitignored, and `scripts/check.sh` fails if any of them appear in the repo.
 - Add the skill to the tables in the root `README.md` and `README.ko.md`.
+
+## Trigger tests
+
+Each plugin has `evals/triggers/<case>/` (`prompt.md` + `graders/`): phrases that should and shouldn't call a skill, in Korean and English. When you add a skill or change a `description`, add cases and run from the repo root (about $0.30 per plugin):
+
+```
+claude plugin eval . --eval-dir plugins/everyday/evals --ablation none --model haiku --runs 3 --no-publish
+claude plugin eval . --eval-dir plugins/dev/evals --ablation none --model haiku --runs 3 --no-publish
+```
+
+Delete `evals/results/` afterwards; the reports contain local paths.
 
 ## Releasing
 
 - Both plugins carry a `version` in `plugin.json`. Installed copies update only when that version changes, so commits between releases don't reach users.
-- To release: bump `version` in every plugin that changed (patch for fixes, minor for new skills or behavior changes), commit, then tag `vX.Y.Z` and publish a GitHub release with notes in English and Korean.
+- To release: bump `version` in every plugin that changed (patch for fixes, minor for new skills or behavior changes), commit, add the entry to `CHANGELOG.md` and `CHANGELOG.ko.md`, commit, then tag `vX.Y.Z` and publish a GitHub release with the same notes.

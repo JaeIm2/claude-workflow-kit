@@ -4,6 +4,15 @@ English | [한국어](README.ko.md)
 
 A Claude Code skill for when you run several sessions side by side and lose track. Type `/everyday:waid` in any session and it prints a short summary of what that session was working on, how far it got, what comes next, and the actual git and background-task state. It does nothing else; you decide what to do next.
 
+**When to use:** You run several Claude Code sessions side by side and just came back to one without remembering what it was doing.
+
+**Try saying:**
+- "Where was I?"
+- "What was I doing here?"
+- `/everyday:waid`
+
+**Needs:** nothing. No setup.
+
 ## Requirements
 - Claude Code
 

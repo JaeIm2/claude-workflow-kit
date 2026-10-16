@@ -4,6 +4,15 @@ English | [한국어](README.ko.md)
 
 Your own Claude session knows your instructions, your memory, and everything you've explained. That's useful, but it also means it fills in gaps the way you would. This skill runs a second, isolated Claude that knows none of that and reviews your code or planning document cold. If a choice only makes sense with background that isn't written down, it says so.
 
+**When to use:** Before handing code or a plan to someone else, you want to know whether it makes sense to a reader with no background.
+
+**Try saying:**
+- "Get an outside review of this branch"
+- "Review this with fresh eyes" + a file or folder
+- "Outsider review of docs/spec.md"
+
+**Needs:** the `claude` CLI (recent version) and git for diff reviews. macOS or Linux.
+
 ## Requirements
 - Claude Code (the `claude` CLI on your `PATH`, recent enough to have `--safe-mode` and `--restricted`; check with `claude --help`)
 - `git` (for reviewing a diff)

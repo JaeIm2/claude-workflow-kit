@@ -4,6 +4,15 @@ English | [한국어](README.ko.md)
 
 A Claude Code skill that writes your weekly report draft. It gathers the week's work from the places you choose, groups it into work items you can track week to week, asks about anything those places missed, and prints a copy-paste-ready draft in your team's format. You submit it yourself; the skill never sends anything.
 
+**When to use:** Your weekly report or status update is due and you don't want to piece the week together from memory.
+
+**Try saying:**
+- "Write up my weekly report"
+- "What did I do this week?"
+- `/everyday:weekly-report`
+
+**Needs:** nothing to start. It gathers more with a work tracker connection, git repos, and Python 3 (for session history).
+
 ## Requirements
 - Claude Code
 - (Optional) An MCP server or connector for your work tracker (Jira, Linear, Notion, Asana, GitHub Issues, YouTrack, ...)

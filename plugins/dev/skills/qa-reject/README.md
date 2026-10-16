@@ -4,6 +4,15 @@ English | [한국어](README.ko.md)
 
 A Claude Code skill for when QA rejects a task. It reads the latest reject reason from your work tracker, checks whether someone else's change is actually the cause, finds the original branch from the work note, reproduces the problem, fixes it, and prepares the hand-back: commit, then push, deploy check, and the tracker comment and status change once you approve.
 
+**When to use:** QA sent a task back and you want the reason found, the problem reproduced and fixed, and the task handed back.
+
+**Try saying:**
+- "QA rejected PROJ-123"
+- "It got bounced back"
+- "Check the reject reason and fix it"
+
+**Needs:** git. A work tracker connection is optional (otherwise paste the QA comments in).
+
 ## Requirements
 - Claude Code and git
 - (Optional) An MCP server or connector for your work tracker. Without one, paste the QA comments in

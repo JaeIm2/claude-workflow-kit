@@ -8,7 +8,7 @@
     {
       "name": "everyday",
       "source": "./plugins/everyday",
-      "description": "Skills for everyone: inbox and briefing, session re-orientation, issue writing, weekly reports, planning documents"
+      "description": "Skills for everyone: inbox and briefing, session re-orientation, issue writing, weekly reports, planning documents, setup check"
     },
     {
       "name": "dev",
