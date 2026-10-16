@@ -1,6 +1,8 @@
 {
   "name": "everyday",
-  "description": "누구나 쓰는 업무 스킬: 접수창구·할 일·작업 기록·아침 브리핑",
-  "author": { "name": "JaeIm2" },
+  "description": "Skills for everyone: inbox and briefing, session re-orientation, issue writing, weekly reports, planning documents",
+  "author": {
+    "name": "JaeIm2"
+  },
   "license": "MIT"
 }

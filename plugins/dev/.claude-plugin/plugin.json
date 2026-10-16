@@ -1,0 +1,6 @@
+{
+  "name": "dev",
+  "description": "Developer workflow skills: task start and finish, QA rejects, UI work, outside review, push confirmation, one-at-a-time heavy commands",
+  "author": { "name": "JaeIm2" },
+  "license": "MIT"
+}
