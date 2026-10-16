@@ -20,13 +20,17 @@ If ~/.claude/wsid/config.md does not exist, output only one line instead of a br
 Do not modify any file in this run (read only). The final output is the briefing markdown only. Add nothing else.'
 
 # Read-only tools only (cannot modify files, tickets, or documents)
-# If you don't use YouTrack or Google Drive, those tools simply go unused.
-# If your connected tool names differ (check with /mcp), edit the names below to match.
-"$CLAUDE" -p "$PROMPT" \
-  --allowedTools "Read" "Glob" "Grep" "Skill" "Bash(git worktree list*)" "Bash(ls*)" \
-    "mcp__youtrack-mcp__search_issues" "mcp__youtrack-mcp__get_current_user" "mcp__youtrack-mcp__get_issue" "mcp__youtrack-mcp__get_issue_comments" \
-    "mcp__claude_ai_Google_Drive__read_file_content" "mcp__claude_ai_Google_Drive__search_files" \
-  > "$OUT_FILE" 2>> "$LOG"
+TOOLS=("Read" "Glob" "Grep" "Skill" "Bash(git worktree list*)" "Bash(ls*)")
+# Plus the read-only tools for your work tracker and notes documents, recorded by wsid setup
+# in the "Briefing read-only tools:" line of the config (e.g. mcp__jira__search_issues, ...)
+EXTRA=$(grep -m1 'Briefing read-only tools:' "$HOME/.claude/wsid/config.md" 2>/dev/null | sed 's/.*Briefing read-only tools://')
+IFS=',' read -ra EXTRA_TOOLS <<< "$EXTRA"
+for t in "${EXTRA_TOOLS[@]}"; do
+  t=$(echo "$t" | tr -d ' `')
+  [[ "$t" == mcp__* ]] && TOOLS+=("$t")
+done
+
+"$CLAUDE" -p "$PROMPT" --allowedTools "${TOOLS[@]}" > "$OUT_FILE" 2>> "$LOG"
 
 STATUS=$?
 if [ $STATUS -eq 0 ] && [ -s "$OUT_FILE" ]; then

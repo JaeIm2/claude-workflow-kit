@@ -20,13 +20,15 @@ Read the settings file `~/.claude/wsid/config.md`.
 
 Ask the following one at a time (as choices if a question UI is available, otherwise in conversation). If the user doesn't know or skips, record "none".
 
-1. **Work tracker** — "Do you track your work in YouTrack?"
-   - Yes → the project key to use (e.g. PROJ); empty means all of my tickets. Check that the YouTrack tools are actually connected with `get_current_user`; if not, record "not connected" and move on
-   - No → none
-2. **Personal notes documents** — "Do you have a document where you usually write down your work? Give me a local file path or a link (Google Docs, etc.). Several are fine."
+1. **Work tracker** — "Where do you manage your work? (e.g. Jira, Linear, Notion, Asana, Trello, GitHub Issues, YouTrack, or nothing in particular)"
+   - Look through the tools available in this session for an MCP server or connector for that service.
+   - **Connected** → ask which part to look at (project, board, team, database); empty means everything assigned to me. Then make one small read call (current user, or a search for my items) to confirm it works. Work out, in that service's own query terms, how to find (a) my items in progress and (b) my items updated in the last 3 days, and record both. Record the names of the read-only tools used (search, list, get), never tools that create, edit, or delete.
+   - **Not connected** → tell the user they can add that service's MCP server or connector and then run `/everyday:wsid settings` again. Record "<service> — not connected" and move on
+   - Nothing in particular → none
+2. **Personal notes documents** — "Do you have a document where you usually write down your work? Give me a local file path or a link (Google Docs, Notion, Confluence, etc.). Several are fine."
    - Local path → check that it can actually be read
-   - Link → check that a tool that can read it is available (e.g. a Google Drive connection). If not, record "link only, cannot read", and during briefings ask the user to paste its content if needed
-3. **Work records location** — "Where should I keep your to-do list and work notes?" Default `~/.claude/wsid/`. If they want somewhere else, such as a Google Drive synced folder, use that path
+   - Link → check that a connected tool can read it. If so, record that tool's read-only tool name too. If not, record "link only, cannot read", and during briefings ask the user to paste its content if needed
+3. **Work records location** — "Where should I keep your to-do list and work notes?" Default `~/.claude/wsid/`. If they want somewhere else, such as a cloud-synced folder, use that path
 4. (Developers only) **Repo paths** — if they want branches and worktrees in progress included in the briefing. Otherwise skip
 
 Once answered, create the settings file and the record files, and briefly show what was created.
@@ -35,14 +37,19 @@ Once answered, create the settings file and the record files, and briefly show w
 
 ```
 # wsid settings
-- Work tracker: YouTrack / project: PROJ         (or: none)
+- Work tracker: Jira / scope: project PROJ        (or: none, or: Notion — not connected)
+  - In progress: assignee = currentUser() AND statusCategory = "In Progress"
+  - Recently updated: assignee = currentUser() AND updated >= -3d
 - Personal notes documents:
   - ~/Documents/work-notes.md                     (local)
-  - https://docs.google.com/document/d/...         (Google Doc, readable)
+  - https://docs.google.com/document/d/...         (readable)
 - Work records location: ~/.claude/wsid
 - Repos: none
+- Briefing read-only tools: mcp__jira__search_issues, mcp__jira__get_issue, mcp__gdrive__read_file
 - Set up on: YYYY-MM-DD
 ```
+
+The example values above are for illustration; record whatever fits the user's own service. Translate the labels into the user's language, **except `Briefing read-only tools:`**, which the morning briefing script reads and must stay exactly as written. List only tools that read, comma-separated, with their full names as they appear in this session.
 
 ## 1. Work records (always, after setup)
 
@@ -98,7 +105,7 @@ Report the classification in one line and go ahead. Ask only when it is ambiguou
 | Documents, materials, links | Summarize → mark the parts relevant to my work and what needs doing |
 | Customer inquiries | Organize the symptom and request → what to check → draft a reply |
 | Errors, odd behavior, screenshots | Figure out what's going on → likely causes or fixes; draft a report if one should be filed |
-| Task name or number ("continue the quote task", ticket number) | If notes exist, read them and continue. If using YouTrack, read the ticket body and comments and summarize |
+| Task name or number ("continue the quote task", ticket number) | If notes exist, read them and continue. If a work tracker is connected, read the item and its comments and summarize |
 | "Done", "add this to my to-dos too" | Update `todo.md` per the recording rules |
 
 - If another installed skill fits exactly, hand off to it. After handing off, that skill's rules take precedence.
@@ -109,7 +116,7 @@ Report the classification in one line and go ahead. Ask only when it is ambiguou
 Gather only what is configured. Skip steps that aren't.
 
 1. **Work records** — all of `todo.md`, plus next steps and update dates from `notes/*.md` whose status is in progress or waiting
-2. **YouTrack** (if used) — `get_current_user`, then `search_issues` with `for: me State: {In Progress}` and `for: me updated: {minus 3d} .. Today`. If a project key is set, restrict with `project: <key>`
+2. **Work tracker** (if connected) — run the two recorded searches (in progress, recently updated) with the tracker's read-only tools, limited to the recorded scope. Call items by the service's own word (issue, ticket, card, page, task)
 3. **Personal notes documents** (if set) — read only the readable ones and check recent content for to-dos and deadlines. For unreadable ones, add one line at the end of the briefing: "Documents not checked: ..."
 4. **Repos** (if set) — `git worktree list`, branches in progress
 
@@ -130,7 +137,7 @@ Output format (add nothing else). Use bullets in every section except the recomm
 
 ## Cautions
 
-- Anything that goes outside (sending messages, sending emails, filing tickets, posting comments) stops at a **draft** and runs only after the user approves.
+- Anything that goes outside (sending messages, sending emails, creating or editing items in a work tracker, posting comments) stops at a **draft** and runs only after the user approves.
 - One line is enough to explain a classification.
 - Personal notes documents are read-only. Edit them only when the user asks.
 - If only a screenshot is pasted, look at it and judge. If unclear, ask "What are you trying to do with this?"
