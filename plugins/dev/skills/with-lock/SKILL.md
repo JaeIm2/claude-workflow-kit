@@ -20,7 +20,7 @@ Add a rule when the user:
 
 Write one line in general terms, then ` — why: <reason or what happened, a few words> (YYYY-MM-DD)`. If the rule holds in only one repo or project, start it with `[<repo or project name>]` and apply it only there. Create the file with those three headings if it doesn't exist. If an existing line already covers it, update that line instead of adding another. Don't record one-offs ("just this time"); if unsure whether it should be permanent, ask. Announce each change in one line: `Rule added: ...`.
 
-If a rule looks useful for everyone, not just this user, offer to draft an issue for the kit at https://github.com/JaeIm2/claude-workflow-kit/issues. The user posts it.
+If a rule looks useful for everyone, not just this user, also append it to `~/.claude/workflow/suggestions.md` (skill name, the rule, why, date) and say so in one line. Don't open an issue on your own; when the user wants to send the collected suggestions, draft one issue for https://github.com/JaeIm2/claude-workflow-kit/issues from that file, and the user posts it.
 
 ## What counts as heavy
 

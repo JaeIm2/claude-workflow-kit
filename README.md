@@ -64,7 +64,7 @@ To update: `/plugin marketplace update claude-workflow-kit`
 
 ## Make it yours
 
-These skills are shared, so they won't fit everyone exactly. When a skill does something you don't want, misses something, or makes a mistake, just say so ("don't post a summary comment", "always run the type check too", "you forgot to check the deploy"). The skill turns it into a rule in `~/.claude/workflow/rules/<skill>.md` and follows it from then on, on top of its own instructions. Updating the kit never touches these files. The one thing a rule can't turn off is asking before anything leaves your machine.
+These skills are shared, so they won't fit everyone exactly. When a skill does something you don't want, misses something, or makes a mistake, just say so ("don't post a summary comment", "always run the type check too", "you forgot to check the deploy"). The skill turns it into a rule in `~/.claude/workflow/rules/<skill>.md` and follows it from then on, on top of its own instructions. Updating the kit never touches these files. Rules that would help everyone are also collected in `~/.claude/workflow/suggestions.md`, so you can send them to the kit as one issue whenever you like. The one thing a rule can't turn off is asking before anything leaves your machine.
 
 ## License
 

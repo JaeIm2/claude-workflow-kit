@@ -33,7 +33,7 @@ plugins/<plugin>/
 5. **Anything that leaves the machine stops at a draft.** Sending messages or emails, creating or editing items in a work tracker, posting comments, and pushing code all wait for the user's approval.
 6. **Keep the hard-won rules.** Rules that came from real mistakes (confirm the deploy before asking for review, check the branch upstream, review repeatedly before handing off) stay, written in general terms.
 7. **Shared work records.** To-dos go in `<Work records location>/todo.md` and multi-day work logs go in `<Work records location>/notes/<task>.md`, in the format wsid defines. Skills that track tasks use these instead of inventing their own.
-8. **Personal rules.** Every SKILL.md carries the same "Personal rules" section right after the Language line (copy it from wsid and change only the skill name). Each user's skips, additions, and corrections go to `~/.claude/workflow/rules/<skill>.md` under `## Skip`, `## Add`, `## Avoid`, and override the skill, except the approval rule in point 5. Repo-specific UI rules stay in the repo's conventions file. Never write rules into the plugin folder.
+8. **Personal rules.** Every SKILL.md carries the same "Personal rules" section right after the Language line (copy it from wsid and change only the skill name). Each user's skips, additions, and corrections go to `~/.claude/workflow/rules/<skill>.md` under `## Skip`, `## Add`, `## Avoid`, and override the skill, except the approval rule in point 5. Repo-specific UI rules stay in the repo's conventions file. Rules useful to everyone are also collected in `~/.claude/workflow/suggestions.md` and sent as an issue only when the user asks. Never write rules into the plugin folder.
 
 ## Language
 
