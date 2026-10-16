@@ -1,0 +1,14 @@
+{
+  "name": "claude-workflow-kit",
+  "description": "일하는 방식을 담은 Claude Code 스킬 모음. 첫 실행 질문으로 각자 환경에 맞춤",
+  "owner": {
+    "name": "JaeIm2"
+  },
+  "plugins": [
+    {
+      "name": "everyday",
+      "source": "./plugins/everyday",
+      "description": "누구나 쓰는 업무 스킬: 접수창구·할 일·작업 기록·아침 브리핑"
+    }
+  ]
+}
