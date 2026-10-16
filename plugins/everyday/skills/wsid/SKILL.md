@@ -11,9 +11,9 @@ Sort out whatever comes in and handle it, and **keep recording** the to-dos and 
 
 ## 0. Check settings (always first)
 
-Read the settings file `~/.claude/wsid/config.md`.
+Read the shared settings file `~/.claude/workflow/config.md`. Every skill in claude-workflow-kit shares this file: a `## Common` section that any skill may reuse, plus one section per skill.
 
-- **If it doesn't exist → run first-run setup**, then continue with the original request.
+- **If the file or any Common item below is missing → run first-run setup** for just the missing items, then continue with the original request. Another skill may already have filled some in; don't ask those again.
 - **If the user says "/everyday:wsid settings" (or "설정")** → show the current values and ask again only about the items they want to change.
 
 ### First-run setup
@@ -28,28 +28,34 @@ Ask the following one at a time (as choices if a question UI is available, other
 2. **Personal notes documents** — "Do you have a document where you usually write down your work? Give me a local file path or a link (Google Docs, Notion, Confluence, etc.). Several are fine."
    - Local path → check that it can actually be read
    - Link → check that a connected tool can read it. If so, record that tool's read-only tool name too. If not, record "link only, cannot read", and during briefings ask the user to paste its content if needed
-3. **Work records location** — "Where should I keep your to-do list and work notes?" Default `~/.claude/wsid/`. If they want somewhere else, such as a cloud-synced folder, use that path
+3. **Work records location** — "Where should I keep your to-do list and work notes?" Default `~/.claude/workflow/`. If they want somewhere else, such as a cloud-synced folder, use that path
 4. (Developers only) **Repo paths** — if they want branches and worktrees in progress included in the briefing. Otherwise skip
 
-Once answered, create the settings file and the record files, and briefly show what was created.
+Once answered, create or update the settings file and the record files, and briefly show what was created. Never remove or rewrite another skill's section.
 
-**`~/.claude/wsid/config.md` format** (the settings file always lives here; only the work records location can change)
+**`~/.claude/workflow/config.md` format** (the settings file always lives here; only the work records location can change). wsid owns no section of its own; everything it needs is in Common.
 
 ```
-# wsid settings
+# claude-workflow-kit settings
+
+## Common
+- Language: Korean
 - Work tracker: Jira / scope: project PROJ        (or: none, or: Notion — not connected)
   - In progress: assignee = currentUser() AND statusCategory = "In Progress"
   - Recently updated: assignee = currentUser() AND updated >= -3d
 - Personal notes documents:
   - ~/Documents/work-notes.md                     (local)
   - https://docs.google.com/document/d/...         (readable)
-- Work records location: ~/.claude/wsid
+- Work records location: ~/.claude/workflow
 - Repos: none
 - Briefing read-only tools: mcp__jira__search_issues, mcp__jira__get_issue, mcp__gdrive__read_file
 - Set up on: YYYY-MM-DD
+
+## <other skill name>
+- (that skill's own settings)
 ```
 
-The example values above are for illustration; record whatever fits the user's own service. Translate the labels into the user's language, **except `Briefing read-only tools:`**, which the morning briefing script reads and must stay exactly as written. List only tools that read, comma-separated, with their full names as they appear in this session.
+The example values above are for illustration; record whatever fits the user's own service. Record `Language` from the language the user is writing in (don't ask). **Keep every heading and label in English exactly as written**, because other skills and the morning briefing script look them up by name. Values may be in the user's language. List only tools that read, comma-separated, with their full names as they appear in this session.
 
 ## 1. Work records (always, after setup)
 

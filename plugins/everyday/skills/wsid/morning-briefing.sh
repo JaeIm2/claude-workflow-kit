@@ -15,15 +15,15 @@ mkdir -p "$OUT_DIR"
 echo "[$(date '+%F %T')] start" >> "$LOG"
 
 PROMPT='Create this morning'"'"'s briefing following the "called with nothing" briefing procedure of the wsid skill.
-Write it in the language used in ~/.claude/wsid/config.md and the work records.
-If ~/.claude/wsid/config.md does not exist, output only one line instead of a briefing: "Run /everyday:wsid once in Claude Code to set it up first."
+Write it in the language used in ~/.claude/workflow/config.md and the work records.
+If ~/.claude/workflow/config.md does not exist, output only one line instead of a briefing: "Run /everyday:wsid once in Claude Code to set it up first."
 Do not modify any file in this run (read only). The final output is the briefing markdown only. Add nothing else.'
 
 # Read-only tools only (cannot modify files, tickets, or documents)
 TOOLS=("Read" "Glob" "Grep" "Skill" "Bash(git worktree list*)" "Bash(ls*)")
 # Plus the read-only tools for your work tracker and notes documents, recorded by wsid setup
 # in the "Briefing read-only tools:" line of the config (e.g. mcp__jira__search_issues, ...)
-EXTRA=$(grep -m1 'Briefing read-only tools:' "$HOME/.claude/wsid/config.md" 2>/dev/null | sed 's/.*Briefing read-only tools://')
+EXTRA=$(grep -m1 'Briefing read-only tools:' "$HOME/.claude/workflow/config.md" 2>/dev/null | sed 's/.*Briefing read-only tools://')
 IFS=',' read -ra EXTRA_TOOLS <<< "$EXTRA"
 for t in "${EXTRA_TOOLS[@]}"; do
   t=$(echo "$t" | tr -d ' `')

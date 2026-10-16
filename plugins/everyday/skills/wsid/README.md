@@ -20,9 +20,9 @@ Call it with nothing and it pulls together your notes and linked sources into a 
 3. On first run it asks a few questions. Answer them and you're set.
    - Where you manage your work (it checks whether that service is connected)
    - Whether you keep a document of your regular work (local path or link)
-   - Where to keep your to-do list and work notes (default `~/.claude/wsid/`)
+   - Where to keep your to-do list and work notes (default `~/.claude/workflow/`)
 
-Settings are saved to `~/.claude/wsid/config.md`. To change them, run `/everyday:wsid settings`.
+Settings are saved to `~/.claude/workflow/config.md`, shared with the other skills in this kit. To change them, run `/everyday:wsid settings`.
 
 ## Usage
 - `/everyday:wsid` — briefing on what to do first today
