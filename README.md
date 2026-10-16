@@ -42,6 +42,7 @@ To update: `/plugin marketplace update claude-workflow-kit`
 
 - Anything that leaves your machine (sending messages, emails, filing tickets, pushing code) stops at a draft and waits for your approval.
 - Values that differ between workplaces (work tools, where notes are kept, etc.) are asked on first run and saved to a config file.
+- Skills reply in whatever language you use.
 
 ## License
 

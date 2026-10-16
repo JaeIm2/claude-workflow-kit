@@ -22,7 +22,7 @@ Call it with nothing and it pulls together your notes and linked sources into a 
    - Whether you keep a document of your regular work (local path or link)
    - Where to keep your to-do list and work notes (default `~/.claude/wsid/`)
 
-Settings are saved to `~/.claude/wsid/config.md`. To change them, run `/everyday:wsid 설정`.
+Settings are saved to `~/.claude/wsid/config.md`. To change them, run `/everyday:wsid settings`.
 
 ## Usage
 - `/everyday:wsid` — briefing on what to do first today
@@ -32,8 +32,6 @@ Settings are saved to `~/.claude/wsid/config.md`. To change them, run `/everyday
 
 To-dos live in a single `todo.md`. Work that takes more than a day gets its own file under `notes/`.
 External actions like sending messages, emails, or filing tickets stop at a draft and run only after you approve.
-
-> Note: the skill's prompts and responses are written in Korean.
 
 ## Morning briefing (optional, macOS)
 Finish the install and first-run setup above before this.

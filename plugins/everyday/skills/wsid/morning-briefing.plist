@@ -7,10 +7,10 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <!-- 본인 홈 경로로 수정 -->
+        <!-- Change to your home path -->
         <string>/Users/YOUR_NAME/.claude/scripts/morning-briefing.sh</string>
     </array>
-    <!-- 평일(월~금) 08:45 -->
+    <!-- Weekdays (Mon-Fri) 08:45 -->
     <key>StartCalendarInterval</key>
     <array>
         <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>45</integer></dict>

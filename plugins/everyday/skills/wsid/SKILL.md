@@ -1,134 +1,136 @@
 ---
 name: wsid
-description: Use when the user pastes something (Slack message, email, meeting note, request, error, screenshot) without a clear instruction and expects the right handling — "/everyday:wsid", "이거 뭐임", "이거 어떻게 하지", "What should I do". Also use when called with no input at all to get a briefing of what to work on next, when the user says a task is done or adds a task ("이거 할 일에 넣어줘", "그거 끝났어"), and for "/everyday:wsid 설정".
+description: Use when the user pastes something (Slack message, email, meeting note, request, error, screenshot) without a clear instruction and expects the right handling — "/everyday:wsid", "What should I do", "what is this", "이거 뭐임", "이거 어떻게 하지". Also use when called with no input at all to get a briefing of what to work on next, when the user says a task is done or adds a task ("add this to my to-dos", "that's done", "이거 할 일에 넣어줘", "그거 끝났어"), and for "/everyday:wsid settings" or "/everyday:wsid 설정".
 ---
 
-# WSID — What Should I Do (만능 접수창구 + 할 일·작업 기록)
+# WSID — What Should I Do (inbox for anything + to-dos and work notes)
 
-뭐가 들어오든 분류해서 처리하고, 그 과정에서 생긴 할 일과 진행 상황을 **작업 폴더에 계속 기록**한다. 빈손으로 부르면 기록과 연결된 자료를 모아 "오늘 뭐부터" 브리핑을 만든다.
+Sort out whatever comes in and handle it, and **keep recording** the to-dos and progress that come out of it in the work folder. When called with nothing, gather the records and linked sources into a "what to do first today" briefing.
 
-## 0. 설정 확인 (매번 가장 먼저)
+**Language:** Always talk to the user in the language they use. Ask the setup questions, write records, and write briefings in that language too. The templates below are in English only as examples; translate their headings and labels when you create the files.
 
-설정 파일 `~/.claude/wsid/config.md`를 읽는다.
+## 0. Check settings (always first)
 
-- **없으면 → 첫 실행 설정**부터 진행하고, 끝나면 원래 요청을 이어서 처리한다.
-- **"/everyday:wsid 설정"이라고 하면** → 기존 값을 보여주고 바꿀 항목만 다시 묻는다.
+Read the settings file `~/.claude/wsid/config.md`.
 
-### 첫 실행 설정
+- **If it doesn't exist → run first-run setup**, then continue with the original request.
+- **If the user says "/everyday:wsid settings" (or "설정")** → show the current values and ask again only about the items they want to change.
 
-아래를 한 번에 하나씩 묻는다 (질문 UI가 있으면 선택지로, 없으면 대화로). 모르거나 건너뛰면 "없음"으로 둔다.
+### First-run setup
 
-1. **업무 관리 도구** — "업무를 YouTrack으로 관리하세요?"
-   - 예 → 사용할 프로젝트 키(예: PROJ), 비우면 내 티켓 전체. YouTrack 도구가 실제로 연결돼 있는지 `get_current_user`로 확인하고, 안 되면 "연결 안 됨"으로 적고 다음으로
-   - 아니오 → 없음
-2. **개인 기록 문서** — "평소 업무를 적어두는 문서가 있으세요? 로컬 파일 경로나 링크(구글 문서 등)를 알려주세요. 여러 개도 됩니다."
-   - 로컬 경로 → 실제로 읽히는지 확인
-   - 링크 → 읽을 수 있는 도구(구글 드라이브 연결 등)가 있는지 확인. 없으면 "링크만 저장, 읽기 불가"로 적고, 브리핑 때 필요하면 내용을 붙여넣어 달라고 안내
-3. **작업 기록 위치** — "할 일 목록과 작업 기록을 어디에 둘까요?" 기본값 `~/.claude/wsid/`. 구글 드라이브 동기화 폴더처럼 다른 곳을 원하면 그 경로
-4. (개발자만) **작업 레포 경로** — 떠 있는 브랜치·워크트리를 브리핑에 넣고 싶으면. 아니면 생략
+Ask the following one at a time (as choices if a question UI is available, otherwise in conversation). If the user doesn't know or skips, record "none".
 
-답을 받으면 설정 파일과 작업 기록 파일을 만들고, 만든 내용을 짧게 보여준다.
+1. **Work tracker** — "Do you track your work in YouTrack?"
+   - Yes → the project key to use (e.g. PROJ); empty means all of my tickets. Check that the YouTrack tools are actually connected with `get_current_user`; if not, record "not connected" and move on
+   - No → none
+2. **Personal notes documents** — "Do you have a document where you usually write down your work? Give me a local file path or a link (Google Docs, etc.). Several are fine."
+   - Local path → check that it can actually be read
+   - Link → check that a tool that can read it is available (e.g. a Google Drive connection). If not, record "link only, cannot read", and during briefings ask the user to paste its content if needed
+3. **Work records location** — "Where should I keep your to-do list and work notes?" Default `~/.claude/wsid/`. If they want somewhere else, such as a Google Drive synced folder, use that path
+4. (Developers only) **Repo paths** — if they want branches and worktrees in progress included in the briefing. Otherwise skip
 
-**`~/.claude/wsid/config.md` 형식** (설정 파일 위치는 항상 여기 고정, 작업 기록 위치만 바꿀 수 있음)
+Once answered, create the settings file and the record files, and briefly show what was created.
 
-```
-# wsid 설정
-- 업무 관리 도구: YouTrack / 프로젝트: PROJ        (또는: 없음)
-- 개인 기록 문서:
-  - ~/Documents/업무메모.md                       (로컬)
-  - https://docs.google.com/document/d/...         (구글 문서, 읽기 가능)
-- 작업 기록 위치: ~/.claude/wsid
-- 작업 레포: 없음
-- 설정일: YYYY-MM-DD
-```
-
-## 1. 작업 기록 (설정 후 항상)
-
-작업 기록 위치 아래에 두 가지를 유지한다.
-
-**`todo.md` — 할 일 목록 한 파일**
+**`~/.claude/wsid/config.md` format** (the settings file always lives here; only the work records location can change)
 
 ```
-# 할 일
-
-## 진행 중
-- [ ] 거래처 견적 비교표 정리 (마감 10/20) → notes/견적-비교.md
-
-## 대기 (남의 답 기다리는 것)
-- [ ] 디자인팀 시안 회신 대기 (10/15 요청)
-
-## 예정
-- [ ] 월간 사용량 보고 (매월 첫 주)
-
-## 완료 (최근 2주만 유지, 오래된 건 삭제)
-- [x] 10/14 고객 문의 3건 답변
+# wsid settings
+- Work tracker: YouTrack / project: PROJ         (or: none)
+- Personal notes documents:
+  - ~/Documents/work-notes.md                     (local)
+  - https://docs.google.com/document/d/...         (Google Doc, readable)
+- Work records location: ~/.claude/wsid
+- Repos: none
+- Set up on: YYYY-MM-DD
 ```
 
-**`notes/<업무 이름>.md` — 하루 넘게 걸리는 업무의 작업 기록**
+## 1. Work records (always, after setup)
+
+Keep two things under the work records location.
+
+**`todo.md` — a single to-do file**
 
 ```
-# <업무 이름>
-상태: 진행 중 | 대기 | 완료
-갱신: YYYY-MM-DD
+# To-dos
 
-## 배경
-## 진행 기록
-- 10/14: 자료 수집, 견적 3곳 받음
-## 다음 할 일
+## In progress
+- [ ] Organize vendor quote comparison (due 10/20) → notes/quote-comparison.md
+
+## Waiting (on someone else's reply)
+- [ ] Waiting for design team's mockup reply (requested 10/15)
+
+## Upcoming
+- [ ] Monthly usage report (first week of every month)
+
+## Done (keep only the last 2 weeks, delete older ones)
+- [x] 10/14 Answered 3 customer inquiries
 ```
 
-기록 규칙:
+**`notes/<task name>.md` — work log for tasks that take more than a day**
 
-- **대화 중에 할 일·마감·대기 건이 나오면** 확실한 건 바로 `todo.md`에 넣고 `TODO 추가: ...` 한 줄로 알린다. 애매하면 `TODO에 넣을까요?`로 묻는다.
-- **"끝났어", "완료"** → 완료로 옮기고 날짜를 붙인다.
-- **하루 넘게 걸릴 업무를 시작하거나 중간에 멈출 때** → 해당 notes 파일의 진행 기록과 "다음 할 일"을 갱신한다. "이어서 하자"고 하면 notes부터 읽고 이어간다.
-- 기록은 짧게. 한 줄로 될 걸 문단으로 쓰지 않는다.
+```
+# <task name>
+Status: in progress | waiting | done
+Updated: YYYY-MM-DD
 
-## 2. 무언가를 던졌을 때 — 분류와 처리
+## Background
+## Progress log
+- 10/14: Gathered material, got quotes from 3 vendors
+## Next steps
+```
 
-분류 결과는 한 줄로 보고하고 바로 진행한다. 두 갈래 이상으로 애매할 때만 묻는다.
+Recording rules:
 
-| 입력 | 처리 |
+- **When a to-do, deadline, or waiting item comes up in conversation**, add the clear ones to `todo.md` right away and announce it in one line (`To-do added: ...`). If unsure, ask (`Add this to your to-dos?`).
+- **"Done", "finished"** → move it to Done with the date.
+- **When starting or pausing a task that takes more than a day** → update that notes file's progress log and next steps. When the user says "let's continue", read the notes first and pick up from there.
+- Keep records short. Don't write a paragraph where one line will do.
+
+## 2. When something is pasted in — classify and handle
+
+Report the classification in one line and go ahead. Ask only when it is ambiguous between two or more paths.
+
+| Input | Handling |
 |---|---|
-| 업무 요청, 지시사항 ("~해달래", "~까지 준비해줘") | 내용 정리 → `todo.md`에 추가(마감 포함) → 바로 할 수 있으면 착수 |
-| 슬랙·메일·메신저 메시지 | 요지 정리 → 답이 필요하면 답변 초안 → 할 일이 생기면 TODO 추가 |
-| 회의 메모, 긴 대화 통째 복붙 | 건별로 쪼개 결정 사항 / 할 일 / 질문 목록으로 정리 → 할 일은 TODO 추가 후 우선순위 질문 |
-| 문서·자료·링크 | 요약 → 내 업무와 관련된 부분, 해야 할 일 표시 |
-| 고객 문의 | 증상·요청 정리 → 확인할 것 → 답변 초안 |
-| 에러, 이상 동작, 스크린샷 | 무슨 상황인지 판단 → 원인 후보나 조치 방법, 제보가 필요하면 제보 초안 |
-| 업무 이름이나 번호 ("견적 건 이어서", 티켓번호) | notes가 있으면 읽고 이어서. YouTrack 사용 시 티켓 본문·댓글 읽고 요약 |
-| "끝났어", "이것도 할 일에 넣어줘" | 기록 규칙대로 `todo.md` 갱신 |
+| Work requests, instructions ("they want ...", "prepare ... by ...") | Summarize → add to `todo.md` (with deadline) → start right away if possible |
+| Slack, email, messenger messages | Summarize the point → draft a reply if one is needed → add to-dos if any come up |
+| Meeting notes, a long conversation pasted whole | Split by topic into decisions / to-dos / open questions → add to-dos, then ask about priority |
+| Documents, materials, links | Summarize → mark the parts relevant to my work and what needs doing |
+| Customer inquiries | Organize the symptom and request → what to check → draft a reply |
+| Errors, odd behavior, screenshots | Figure out what's going on → likely causes or fixes; draft a report if one should be filed |
+| Task name or number ("continue the quote task", ticket number) | If notes exist, read them and continue. If using YouTrack, read the ticket body and comments and summarize |
+| "Done", "add this to my to-dos too" | Update `todo.md` per the recording rules |
 
-- 다른 전용 스킬이 설치돼 있고 딱 맞으면 그 스킬로 넘긴다. 넘긴 뒤에는 그 스킬 규칙이 우선.
-- 어디에도 안 걸리면 일반 작업으로 진행. 억지로 끼워 맞추지 않는다.
+- If another installed skill fits exactly, hand off to it. After handing off, that skill's rules take precedence.
+- If nothing fits, proceed as a normal task. Don't force a fit.
 
-## 3. 빈손 호출 ("/everyday:wsid"만, "뭐하지") — 브리핑
+## 3. Called with nothing ("/everyday:wsid" alone, "what should I do") — briefing
 
-설정에 있는 것만 모은다. 없는 단계는 건너뛴다.
+Gather only what is configured. Skip steps that aren't.
 
-1. **작업 기록** — `todo.md` 전체, 상태가 진행 중·대기인 `notes/*.md`의 다음 할 일과 갱신일
-2. **YouTrack** (사용 시) — `get_current_user` 후 `search_issues`로 `for: me State: {In Progress}`, `for: me updated: {minus 3d} .. Today`. 프로젝트 키가 있으면 `project: <키>`로 제한
-3. **개인 기록 문서** (설정 시) — 읽을 수 있는 것만 읽고 최근 내용에서 할 일·마감 확인. 읽기 불가 문서는 브리핑 끝에 "확인 못 한 문서: ..." 한 줄
-4. **작업 레포** (설정 시) — `git worktree list`, 진행 중 브랜치
+1. **Work records** — all of `todo.md`, plus next steps and update dates from `notes/*.md` whose status is in progress or waiting
+2. **YouTrack** (if used) — `get_current_user`, then `search_issues` with `for: me State: {In Progress}` and `for: me updated: {minus 3d} .. Today`. If a project key is set, restrict with `project: <key>`
+3. **Personal notes documents** (if set) — read only the readable ones and check recent content for to-dos and deadlines. For unreadable ones, add one line at the end of the briefing: "Documents not checked: ..."
+4. **Repos** (if set) — `git worktree list`, branches in progress
 
-출력 형식 (다른 말 붙이지 않음):
+Output format (add nothing else). Use bullets in every section except the recommendation, which is a numbered list (`1.`, `2.`, ...):
 
 ```
-## YYYY-MM-DD 브리핑
-**주의** — 마감 임박·지남, 남을 기다리게 하고 있는 것
-**진행 중** / **대기 중** / **새로 들어옴** / **방치됨(며칠째)**
-**추천: 오늘 뭐부터** — 항목마다 이유 한 줄
+## YYYY-MM-DD Briefing
+**Heads-up** — deadlines close or past, things others are waiting on me for
+**In progress** / **Waiting** / **New** / **Stale (N days)**
+**Recommended: start with** — one line of reasoning per item
 ```
 
-- 남을 막고 있는 것(내 답·검토를 기다리는 일)을 최상단에.
-- 마감이 있는 건 남은 날짜를 같이 쓴다.
-- 갱신이 오래된 진행 중 항목은 방치됨으로 표시.
-- 건수를 쓸 때는 나열한 항목 수와 맞는지 확인.
-- 브리핑 중 기록과 실제가 어긋나 보이면 (완료됐는데 진행 중으로 남은 것 등) 고치지 말고 "정리 필요"로 표시만.
+- Put things that block others (others waiting on my reply or review) at the very top.
+- For items with deadlines, include the days left.
+- Mark in-progress items that haven't been updated in a while as stale.
+- When writing counts, check they match the number of items listed.
+- If the records look out of sync with reality during a briefing (something done but still listed as in progress, etc.), don't fix it; just mark it "needs cleanup".
 
-## 주의
+## Cautions
 
-- 밖으로 나가는 것(메시지 전송, 메일 발송, 티켓 등록, 댓글 게시)은 **초안까지만** 만들고 사용자 승인 후 실행.
-- 분류 설명은 한 줄이면 충분.
-- 개인 기록 문서는 읽기만 한다. 수정은 사용자가 요청할 때만.
-- 스크린샷만 던져지면 내용 보고 판단. 모르겠으면 "이거 뭐 하려는 거예요?" 물어본다.
+- Anything that goes outside (sending messages, sending emails, filing tickets, posting comments) stops at a **draft** and runs only after the user approves.
+- One line is enough to explain a classification.
+- Personal notes documents are read-only. Edit them only when the user asks.
+- If only a screenshot is pasted, look at it and judge. If unclear, ask "What are you trying to do with this?"
