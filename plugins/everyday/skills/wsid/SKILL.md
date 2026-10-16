@@ -9,6 +9,19 @@ Sort out whatever comes in and handle it, and **keep recording** the to-dos and 
 
 **Language:** Always talk to the user in the language they use. Ask the setup questions, write records, and write briefings in that language too. The templates below are in English only as examples; translate their headings and labels when you create the files.
 
+## Personal rules (always, before anything else in this skill)
+
+This skill is shared, so each user shapes it with their own rules. Read `~/.claude/workflow/rules/wsid.md` if it exists and follow it on top of this file. Where the two conflict, the personal rule wins, with one exception: anything that leaves the machine (sending, posting, creating or editing items in a tracker, pushing) still waits for approval. If a rule asks to skip that approval, keep asking and say why.
+
+Add a rule when the user:
+- points out a mistake or something missed ("you forgot ...", "that's wrong") → under `## Avoid`
+- says they don't want a step ("don't ...", "skip ...", "stop ...") → under `## Skip`
+- wants something extra every time ("always ...", "also ...") → under `## Add`
+
+Write one line in general terms, then ` — why: <reason or what happened, a few words> (YYYY-MM-DD)`. If the rule holds in only one repo or project, start it with `[<repo or project name>]` and apply it only there. Create the file with those three headings if it doesn't exist. If an existing line already covers it, update that line instead of adding another. Don't record one-offs ("just this time"); if unsure whether it should be permanent, ask. Announce each change in one line: `Rule added: ...`.
+
+If a rule looks useful for everyone, not just this user, offer to draft an issue for the kit at https://github.com/JaeIm2/claude-workflow-kit/issues. The user posts it.
+
 ## 0. Check settings (always first)
 
 Read the shared settings file `~/.claude/workflow/config.md`. Every skill in claude-workflow-kit shares this file: a `## Common` section that any skill may reuse, plus one section per skill.
