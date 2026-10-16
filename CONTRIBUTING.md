@@ -47,3 +47,8 @@ plugins/<plugin>/
 - Search the repo for names, internal URLs, and customer names. The result must be zero.
 - `claude plugin validate ./`
 - Add the skill to the tables in the root `README.md` and `README.ko.md`.
+
+## Releasing
+
+- Both plugins carry a `version` in `plugin.json`. Installed copies update only when that version changes, so commits between releases don't reach users.
+- To release: bump `version` in every plugin that changed (patch for fixes, minor for new skills or behavior changes), commit, then tag `vX.Y.Z` and publish a GitHub release with notes in English and Korean.
