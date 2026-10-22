@@ -39,7 +39,7 @@ Settings are saved under `## ui-work` in `~/.claude/workflow/config.md`, shared 
 2. **Reads the design** from a Figma link or screenshots, if there is one.
 3. **Confirms the structure** in 3-5 lines before coding: where it goes, what's reused, what happens on success and failure, edge cases. Ambiguous requirements get both readings, not a guess.
 4. **Implements** following the conventions, changing only what the request needs.
-5. **Verifies in a browser**: opens the screen, operates it, checks the states, then closes the browser and deletes the screenshots.
+5. **Verifies in a browser**: opens the screen, operates it, checks the states, stresses the layout with extreme data (long names, wide tables, narrow screens) and measures overflow, then closes the browser and deletes the screenshots.
 6. **Reports** what it built and checked, and marks the decisions it made on its own so you can reverse them easily.
 
 When you correct the result ("this should be a toast, not a modal"), the rule goes into the conventions file right away.

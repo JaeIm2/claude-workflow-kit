@@ -2,6 +2,11 @@
 
 English | [한국어](CHANGELOG.ko.md)
 
+## Unreleased
+
+### Changed
+- `ui-work` self-verification now stresses the layout with extreme data (wide tables, long names and URLs, empty values) at four screen widths, measures overflow and overlap, and includes the numbers in the report.
+
 ## 0.2.0 — 2026-10-16
 
 ### Added

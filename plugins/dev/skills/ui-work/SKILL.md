@@ -126,6 +126,14 @@ Check it yourself before reporting:
 
 - Start the dev server (or use the one already running) and, with the browser tool, open the screen, operate it, and take screenshots.
 - Check: anything missing against the requirements? Convention violations? Do the empty, loading, and error states behave correctly? Did any existing screen break?
+- **Stress the layout with extreme data and measure it (required).** Checking only the scenario you designed misses overflow and overlap. Include the existing layout that wraps your change (grids, cards).
+  - Feed extreme data: a wide table (10+ columns with set widths), 40+ character emails and names, a 100-character title, a long URL with no break points, empty values.
+  - At 1440, 1280, 390, and 320px wide, measure with the browser tool's script evaluation:
+    - No horizontal page overflow: `document.documentElement.scrollWidth <= innerWidth`
+    - No text spilling out of its box (any element with `scrollWidth > clientWidth` must be handled with ellipsis or scrolling)
+    - No overlapping lines or elements
+    - Font size, weight, and color stay within the values the surrounding existing screens use (compare against real screens, not demo values)
+  - Unit tests in jsdom don't compute layout, so passing tests say nothing about these.
 - Save screenshots to a temporary folder outside the repo, never inside the project.
 - When done, **close the browser and delete the screenshots.** Stop the dev server if you started it, unless the user wants it left running.
 
@@ -133,7 +141,7 @@ If something can't be verified (no browser tool, sign-in unavailable, needed dat
 
 ### 6. Report
 
-Based on what the screenshots showed, report what was built, what was checked, and what you decided on your own. Mark every decision you made without the user's input clearly, so it's easy for them to reverse.
+Based on what the screenshots showed, report what was built, what was checked, and what you decided on your own. Mark every decision you made without the user's input clearly, so it's easy for them to reverse. Include the layout measurements (page `scrollWidth` vs `innerWidth` at each width, number of overflowing elements), so only the judgment of how it looks is left to the user.
 
 ## Learning from corrections (important)
 
